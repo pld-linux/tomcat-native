@@ -1,19 +1,34 @@
+
+%if "%{pld_release}" == "ti"
+%bcond_without	java_sun	# build with gcj
+%else
+%bcond_with	java_sun	# build with java-sun
+%endif
+#
+%include	/usr/lib/rpm/macros.java
+
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
 Version:	1.1.16
 Release:	0.1
-License:	Apache
+License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
+# Source0-md5:	2d27f8cf0d87b92b57b2758dad48ff2d
 URL:		http://tomcat.apache.org/native-doc
-BuildRequires:	apr-util-devel
-BuildRequires:	jdk
+BuildRequires:	ant
+BuildRequires:	apr-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
+%{!?with_java_sun:BuildRequires:	java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires:	java-sun}
+BuildRequires:	jpackage-utils
+BuildRequires:	libtool
 BuildRequires:	openssl-devel
-Requires:	apr
-Requires:	openssl
-Suggests:	jre
-Suggests:	tomcat
+BuildRequires:	rpm >= 4.4.9-56
+BuildRequires:	rpm-javaprov
+BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,7 +47,6 @@ overall make Java much more viable as a full fledged webserver
 platform rather than simply a backend focused technology.
 
 %description -l pl.UTF-8
-
 Tomcat może wykorzytać Apache Portable Runtime aby zapewnić
 najwyższą, saklowalność, wydajność i lepszą integrację z
 natywnymi technologiami serwerowymi.
@@ -60,34 +74,74 @@ Requires:	%{name} = %{version}-%{release}
 Header files for tcnative library
 
 %description devel -l pl.UTF-8
-Pliki nag¿ówkowe biblioteki tcnative
+Pliki nagłówkowe biblioteki tcnative
+
+%package static
+Summary:	Static tcnative library
+Summary(pl.UTF-8):	Statyczna biblioteka tcnative
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static tcnative library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka tcnative.
 
 %prep
-%setup -q -n %{name}-%{version}-src/jni/native
+%setup -q -n %{name}-%{version}-src
 
 %build
-%configure \
-	--with-apr=%{_bindir} \
-	--with-java-home=%{java_home}\
+# build java part
+cd jni
+%ant clean jar
 
+# build native part
+cd native
+./buildconf --with-apr=%{_datadir}/apr
+%configure \
+	--with-java-home=%{java_home} \
+	--with-apr=/usr
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-# Unpackaged files
-rm -f $RPM_BUILD_ROOT%{_libdir}/tcnative.exp
+cd jni
+install -d $RPM_BUILD_ROOT/%{_javadir}
+install dist/tomcat-native-1.0.0.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-1.0.0.jar
+ln -s tomcat-native-1.0.0.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
+
+cd native
+%{__make} install \
+	prefix=%{_prefix} \
+	DESTDIR=$RPM_BUILD_ROOT
+
+# Why Makefile doesn't do that?
+install -d $RPM_BUILD_ROOT/%{_includedir}
+install include/*.h $RPM_BUILD_ROOT/%{_includedir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-#%doc CHANGES LICENSE NOTICE
-%attr(755,root,root) %{_libdir}/libtcnative-1.so*
+%doc CHANGELOG.txt KEYS
+%{_javadir}/%{name}-1.0.0.jar
+%{_javadir}/%{name}.jar
+%attr(755,root,root) %{_libdir}/libtcnative-1.so.0.1.16
+%attr(755,root,root) %ghost %{_libdir}/libtcnative-1.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/libtcnative-1.*a
+%{_libdir}/libtcnative-1.la
+%{_libdir}/libtcnative-1.so
 %{_pkgconfigdir}/tcnative-1.pc
+%{_includedir}/*.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libtcnative-1.a
