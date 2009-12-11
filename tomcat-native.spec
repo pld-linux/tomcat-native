@@ -1,15 +1,17 @@
 
 %include	/usr/lib/rpm/macros.java
 
+%define		jarver	1.1.17
+
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
-Version:	1.1.16
+Version:	1.1.18
 Release:	0.1
 License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	2d27f8cf0d87b92b57b2758dad48ff2d
+# Source0-md5:	03701be390f81198ca4531ab4b0a8f35
 URL:		http://tomcat.apache.org/native-doc
 BuildRequires:	ant
 BuildRequires:	apr-devel
@@ -22,7 +24,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
-ExclusiveArch:  i586 i686 pentium3 pentium4 athlon %{x8664}
+ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,22 +43,22 @@ overall make Java much more viable as a full fledged webserver
 platform rather than simply a backend focused technology.
 
 %description -l pl.UTF-8
-Tomcat może wykorzytać Apache Portable Runtime aby zapewnić
-najwyższą, saklowalność, wydajność i lepszą integrację z
-natywnymi technologiami serwerowymi.
+Tomcat może wykorzytać Apache Portable Runtime aby zapewnić najwyższą,
+saklowalność, wydajność i lepszą integrację z natywnymi technologiami
+serwerowymi.
 
-Apache portable Runtime jest wysoce przenośną biblioteką, która
-jest sercem serwera Apache HTTPD 2.x. APR ma wiele zestosowań, m. in.
+Apache portable Runtime jest wysoce przenośną biblioteką, która jest
+sercem serwera Apache HTTPD 2.x. APR ma wiele zestosowań, m. in.
 dostępd do zaawansowanych funkcjonalnośći IO (takich jak sendfile,
 epoll i OpenSSL), funkcjonalności posiomu systemu operacyjnego
 (generacja liczb losowych, stan systemu, itp.) i natywną obsługę
 procesów (współdzielona pamięć, potoki NT i gniazda uniksowe).
 
 Te cechy pozwalają na wykorzystanie Tomcata jako sewera www do
-zastosowań ogólnych, pozwalają na o wiele lepszą integrację z
-innymi natywnymi technologiami www i w ogólności pozwalają na
-traktowanie Javy jako zaawansowanej i kompletnej platformy www s nie
-tylko technologii backendowej.
+zastosowań ogólnych, pozwalają na o wiele lepszą integrację z innymi
+natywnymi technologiami www i w ogólności pozwalają na traktowanie
+Javy jako zaawansowanej i kompletnej platformy www a nie tylko
+technologii backendowej.
 
 %package devel
 Summary:	Header files for tcnative library
@@ -65,10 +67,10 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for tcnative library
+Header files for tcnative library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki tcnative
+Pliki nagłówkowe biblioteki tcnative.
 
 %package static
 Summary:	Static tcnative library
@@ -103,8 +105,8 @@ rm -rf $RPM_BUILD_ROOT
 
 cd jni
 install -d $RPM_BUILD_ROOT/%{_javadir}
-install dist/tomcat-native-1.0.0.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-1.0.0.jar
-ln -s tomcat-native-1.0.0.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
+install dist/tomcat-native-%{jarver}-dev.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{jarver}.jar
+ln -s tomcat-native-%{jarver}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
 
 cd native
 %{__make} install \
@@ -124,9 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt KEYS
-%{_javadir}/%{name}-1.0.0.jar
+%{_javadir}/%{name}-%{jarver}.jar
 %{_javadir}/%{name}.jar
-%attr(755,root,root) %{_libdir}/libtcnative-1.so.0.1.16
+%attr(755,root,root) %{_libdir}/libtcnative-1.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libtcnative-1.so.0
 
 %files devel
