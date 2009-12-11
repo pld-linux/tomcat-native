@@ -1,0 +1,1 @@
+- moved .so from -devel to main package. Dumb tomcat tries to load .so file.
