@@ -125,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.txt KEYS
+%doc CHANGELOG.txt KEYS README.txt
 %{_javadir}/%{name}-%{jarver}.jar
 %{_javadir}/%{name}.jar
 %attr(755,root,root) %{_libdir}/libtcnative-1.so.*.*
