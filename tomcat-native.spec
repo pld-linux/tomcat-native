@@ -6,12 +6,12 @@
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
-Version:	1.1.20
-Release:	2
+Version:	1.1.22
+Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	fb2b9d073cb6575c2d0020eda266ca0c
+# Source0-md5:	44d764f8d99d0454c7337ba9701558ee
 URL:		http://tomcat.apache.org/native-doc
 BuildRequires:	ant
 BuildRequires:	apr-devel
