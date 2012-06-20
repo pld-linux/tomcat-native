@@ -1,17 +1,15 @@
 
 %include	/usr/lib/rpm/macros.java
 
-%define		jarver	1.1.17
-
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
-Version:	1.1.23
+Version:	1.1.24
 Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	f2a55b5a19adbe491edc98e0c11d9028
+# Source0-md5:	cfd4762f2da19ba79d1b6a2a948c9d21
 URL:		http://tomcat.apache.org/native-doc
 BuildRequires:	ant
 BuildRequires:	apr-devel
@@ -105,8 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 
 cd jni
 install -d $RPM_BUILD_ROOT/%{_javadir}
-install dist/tomcat-native-%{jarver}-dev.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{jarver}.jar
-ln -s tomcat-native-%{jarver}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
+install dist/tomcat-native-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{version}.jar
+ln -s tomcat-native-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
 
 cd native
 %{__make} install \
@@ -126,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt KEYS README.txt
-%{_javadir}/%{name}-%{jarver}.jar
+%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %attr(755,root,root) %{_libdir}/libtcnative-1.so.*.*
 %attr(755,root,root) %ghost %{_libdir}/libtcnative-1.so.0
