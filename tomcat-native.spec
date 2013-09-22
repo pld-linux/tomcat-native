@@ -4,18 +4,18 @@
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
-Version:	1.1.24
+Version:	1.1.28
 Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	cfd4762f2da19ba79d1b6a2a948c9d21
+# Source0-md5:	ae85f03bed95795f93456504e5b268c9
 URL:		http://tomcat.apache.org/native-doc
 BuildRequires:	ant
 BuildRequires:	apr-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	jdk
+BuildRequires:	jdk >= 1.7.0
 BuildRequires:	jpackage-utils
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
@@ -103,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 
 cd jni
 install -d $RPM_BUILD_ROOT/%{_javadir}
-install dist/tomcat-native-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{version}.jar
+install dist/tomcat-native-%{version}-dev.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{version}.jar
 ln -s tomcat-native-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
 
 cd native
@@ -123,7 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.txt KEYS README.txt
+%doc CHANGELOG.txt README.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %attr(755,root,root) %{_libdir}/libtcnative-1.so.*.*
