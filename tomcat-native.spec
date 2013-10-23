@@ -86,7 +86,10 @@ Statyczna biblioteka tcnative.
 %build
 # build java part
 cd jni
-%ant clean jar
+%ant clean jar \
+	-Dcompile.source=1.7 \
+	-Dcompile.target=1.7 \
+	%{nil}
 
 # build native part
 cd native
