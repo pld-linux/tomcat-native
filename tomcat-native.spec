@@ -1,16 +1,14 @@
-
 %include	/usr/lib/rpm/macros.java
-
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
-Version:	1.1.28
+Version:	1.1.29
 Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	ae85f03bed95795f93456504e5b268c9
-URL:		http://tomcat.apache.org/native-doc
+# Source0-md5:	98dd26555a600928238dd9f1d87b22da
+URL:		http://tomcat.apache.org/native-doc/
 BuildRequires:	ant
 BuildRequires:	apr-devel
 BuildRequires:	autoconf
@@ -100,11 +98,10 @@ cd native
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 cd jni
-install -d $RPM_BUILD_ROOT/%{_javadir}
-install dist/tomcat-native-%{version}-dev.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native-%{version}.jar
-ln -s tomcat-native-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/tomcat-native.jar
+install -d $RPM_BUILD_ROOT%{_javadir}
+cp -p dist/tomcat-native-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tomcat-native-%{version}.jar
+ln -s tomcat-native-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tomcat-native.jar
 
 cd native
 %{__make} install \
@@ -113,7 +110,7 @@ cd native
 
 # Why Makefile doesn't do that?
 install -d $RPM_BUILD_ROOT/%{_includedir}
-install include/*.h $RPM_BUILD_ROOT/%{_includedir}
+cp -p include/*.h $RPM_BUILD_ROOT/%{_includedir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
