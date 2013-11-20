@@ -40,7 +40,7 @@ platform rather than simply a backend focused technology.
 
 %description -l pl.UTF-8
 Tomcat może wykorzytać Apache Portable Runtime aby zapewnić najwyższą,
-saklowalność, wydajność i lepszą integrację z natywnymi technologiami
+skalowalność, wydajność i lepszą integrację z natywnymi technologiami
 serwerowymi.
 
 Apache portable Runtime jest wysoce przenośną biblioteką, która jest
