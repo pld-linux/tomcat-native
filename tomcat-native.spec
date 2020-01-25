@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.java
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
 Name:		tomcat-native
