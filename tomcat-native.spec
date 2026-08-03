@@ -1,26 +1,28 @@
+%define		orgname		tomcat-native
+
+%{?use_default_jdk:%use_default_jdk 8}
+
 Summary:	Native Tomcat Connector based on APR
-Summary(pl.UTF-8):	Natywny Connector Tomcata oparty o APR
-Name:		tomcat-native
-Version:	1.2.31
+Summary(pl.UTF-8):	Natywny konektor Tomcata oparty na APR
+Name:		%{orgname}9
+Version:	1.3.8
 Release:	1
 License:	Apache v2
 Group:		Libraries
-Source0:	http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	a6943e123b1eca0795e106af132df93d
-URL:		http://tomcat.apache.org/native-doc/
+Source0:	https://archive.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{orgname}-%{version}-src.tar.gz
+# Source0-md5:	b179c9cb0fbc942a389e94cf5dc9345c
+URL:		https://tomcat.apache.org/native-1.3-doc/
 BuildRequires:	ant
-BuildRequires:	apr-devel
+BuildRequires:	apr-devel >= 1.6.3
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	jdk >= 1.7.0
+%buildrequires_jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	libtool
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 1.1.1
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildConflicts:	java-gcj-compat
-Requires:	nss
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,27 +40,35 @@ enable much better integration with other native web technologies, and
 overall make Java much more viable as a full fledged webserver
 platform rather than simply a backend focused technology.
 
+This is the 1.3.x branch, which serves Tomcat 9. Tomcat 10.1 and newer
+dropped the APR connector and need the 2.0.x branch, packaged as
+tomcat-native.
+
 %description -l pl.UTF-8
-Tomcat może wykorzytać Apache Portable Runtime aby zapewnić najwyższą,
+Tomcat może wykorzystać Apache Portable Runtime, aby zapewnić najwyższą
 skalowalność, wydajność i lepszą integrację z natywnymi technologiami
 serwerowymi.
 
-Apache portable Runtime jest wysoce przenośną biblioteką, która jest
-sercem serwera Apache HTTPD 2.x. APR ma wiele zestosowań, m. in.
-dostępd do zaawansowanych funkcjonalnośći IO (takich jak sendfile,
-epoll i OpenSSL), funkcjonalności posiomu systemu operacyjnego
-(generacja liczb losowych, stan systemu, itp.) i natywną obsługę
-procesów (współdzielona pamięć, potoki NT i gniazda uniksowe).
+Apache Portable Runtime jest wysoce przenośną biblioteką, która jest
+sercem serwera Apache HTTPD 2.x. APR ma wiele zastosowań, m.in. dostęp
+do zaawansowanych funkcji we/wy (takich jak sendfile, epoll i OpenSSL),
+funkcji poziomu systemu operacyjnego (generowanie liczb losowych, stan
+systemu itp.) oraz natywną obsługę procesów (pamięć współdzielona,
+potoki NT i gniazda uniksowe).
 
-Te cechy pozwalają na wykorzystanie Tomcata jako sewera www do
+Te cechy pozwalają na wykorzystanie Tomcata jako serwera WWW do
 zastosowań ogólnych, pozwalają na o wiele lepszą integrację z innymi
-natywnymi technologiami www i w ogólności pozwalają na traktowanie
-Javy jako zaawansowanej i kompletnej platformy www a nie tylko
-technologii backendowej.
+natywnymi technologiami WWW i ogólnie pozwalają traktować Javę jako
+zaawansowaną i kompletną platformę WWW, a nie tylko technologię
+backendową.
+
+To jest gałąź 1.3.x, przeznaczona dla Tomcata 9. Tomcat 10.1 i nowsze
+nie mają już konektora APR i wymagają gałęzi 2.0.x, dostarczanej jako
+tomcat-native.
 
 %package devel
 Summary:	Header files for tcnative library
-Summary(pl.UTF-8):	Pliki nagłówwkowe biblioteki tcnative
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tcnative
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -81,14 +91,11 @@ Static tcnative library.
 Statyczna biblioteka tcnative.
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup -q -n %{orgname}-%{version}-src
 
 %build
 # build java part
-%ant clean jar \
-	-Dcompile.source=1.7 \
-	-Dcompile.target=1.7 \
-	%{nil}
+%ant clean jar
 
 # build native part
 cd native
@@ -101,8 +108,8 @@ cd native
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/tomcat-native-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tomcat-native-%{version}.jar
-ln -s tomcat-native-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tomcat-native.jar
+cp -p dist/%{orgname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 cd native
 %{__make} install \
@@ -110,8 +117,8 @@ cd native
 	DESTDIR=$RPM_BUILD_ROOT
 
 # Why Makefile doesn't do that?
-install -d $RPM_BUILD_ROOT/%{_includedir}
-cp -p include/*.h $RPM_BUILD_ROOT/%{_includedir}
+install -d $RPM_BUILD_ROOT%{_includedir}/%{name}
+cp -p include/*.h $RPM_BUILD_ROOT%{_includedir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -131,7 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libtcnative-1.la
-%{_includedir}/*.h
+%{_includedir}/%{name}
 
 %files static
 %defattr(644,root,root,755)
