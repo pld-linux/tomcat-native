@@ -5,12 +5,12 @@
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny konektor Tomcata oparty na APR
 Name:		%{orgname}9
-Version:	1.3.8
+Version:	1.3.9
 Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	https://archive.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{orgname}-%{version}-src.tar.gz
-# Source0-md5:	b179c9cb0fbc942a389e94cf5dc9345c
+# Source0-md5:	ae26db09f41cdaa07510b20ce20d973f
 URL:		https://tomcat.apache.org/native-1.3-doc/
 BuildRequires:	ant
 BuildRequires:	apr-devel >= 1.6.3
@@ -19,7 +19,7 @@ BuildRequires:	automake
 %buildrequires_jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	libtool
-BuildRequires:	openssl-devel >= 1.1.1
+BuildRequires:	openssl-devel >= 3.0.0
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
