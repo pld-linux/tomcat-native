@@ -4,9 +4,9 @@
 
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny konektor Tomcata oparty na APR
-Name:		%{orgname}9
+Name:		tomcat9-native
 Version:	1.3.9
-Release:	1
+Release:	2
 License:	Apache v2
 Group:		Libraries
 Source0:	https://archive.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{orgname}-%{version}-src.tar.gz
@@ -23,6 +23,7 @@ BuildRequires:	openssl-devel >= 3.0.0
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
+Obsoletes:	tomcat-native9 < 1.3.9-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -71,6 +72,7 @@ Summary:	Header files for tcnative library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tcnative
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	tomcat-native9-devel < 1.3.9-2
 
 %description devel
 Header files for tcnative library.
@@ -83,6 +85,7 @@ Summary:	Static tcnative library
 Summary(pl.UTF-8):	Statyczna biblioteka tcnative
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	tomcat-native9-static < 1.3.9-2
 
 %description static
 Static tcnative library.
