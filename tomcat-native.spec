@@ -31,7 +31,7 @@ an operating system abstraction layer.
 The APR based HTTP connector was removed in Tomcat 10.1, so this
 version only provides OpenSSL support for the NIO and NIO2 connectors.
 It is meant for Tomcat 10.1 and newer; Tomcat 9 needs the 1.3.x branch,
-packaged as tomcat-native9.
+packaged as tomcat9-native.
 
 %description -l pl.UTF-8
 Tomcat Native to nakładka JNI pozwalająca Tomcatowi obsługiwać TLS
@@ -41,7 +41,7 @@ operacyjnego używa biblioteki Apache Portable Runtime.
 Konektor HTTP oparty na APR został usunięty w Tomcacie 10.1, więc ta
 wersja udostępnia obsługę OpenSSL wyłącznie dla konektorów NIO i NIO2.
 Jest przeznaczona dla Tomcata 10.1 i nowszych; Tomcat 9 wymaga gałęzi
-1.3.x, dostarczanej jako tomcat-native9.
+1.3.x, dostarczanej jako tomcat9-native.
 
 %package devel
 Summary:	Header files for tcnative library
