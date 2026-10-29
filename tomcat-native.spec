@@ -3,12 +3,12 @@
 Summary:	Native Tomcat library providing TLS support via OpenSSL
 Summary(pl.UTF-8):	Natywna biblioteka Tomcata obsługująca TLS przez OpenSSL
 Name:		tomcat-native
-Version:	2.0.16
+Version:	2.0.17
 Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	https://archive.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
-# Source0-md5:	8c17d3332bf1cfaa4139b546451a4216
+# Source0-md5:	e1454ea7e60601774f1fa6d0f06ee1e5
 URL:		https://tomcat.apache.org/native-doc/
 BuildRequires:	ant >= 1.10.2
 BuildRequires:	apr-devel >= 1.7.0
