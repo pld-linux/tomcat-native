@@ -5,12 +5,12 @@
 Summary:	Native Tomcat Connector based on APR
 Summary(pl.UTF-8):	Natywny konektor Tomcata oparty na APR
 Name:		tomcat9-native
-Version:	1.3.9
-Release:	2
+Version:	1.3.10
+Release:	1
 License:	Apache v2
 Group:		Libraries
 Source0:	https://archive.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{orgname}-%{version}-src.tar.gz
-# Source0-md5:	ae26db09f41cdaa07510b20ce20d973f
+# Source0-md5:	9e8230375b8fbb093f81ba7126ef31c8
 URL:		https://tomcat.apache.org/native-1.3-doc/
 BuildRequires:	ant
 BuildRequires:	apr-devel >= 1.6.3
